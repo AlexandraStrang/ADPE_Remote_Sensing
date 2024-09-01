@@ -1,10 +1,9 @@
-# Chapter 3: Advancing efficiencies in remote sensing of Ross Sea Adélie penguin populations
-A chapter belonging to my Master's thesis submitted for the degree Master of Science at the University of Canterbury, Christchurch, New Zealand. 
+# Advancing efficiencies in remote sensing of Ross Sea Adélie penguin populations
 
-Submitted: 16/02/2024
 
 ## Overview:
-This chapter explored the use of Very High-Resolution satellite imagery (VHR) for monitoring Adélie penguin colonies in the Ross Sea region of Antarctica. The aim was to create a model that predicts the number of breeding pairs of Adélie penguins using the area of guano for four colonies in the Ross Sea. Three main questions were addressed: 
+[add overview]
+ Three main questions were addressed: 
 
   1) What factors influence the area of guano extracted from VHR imagery in any given year, and therefore the ability to predict the number of breeding pairs using       guano area?
 
