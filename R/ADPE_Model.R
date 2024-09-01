@@ -1,8 +1,6 @@
 
 # Model to predict the number of breeding pairs of Adélie penguins using the area of guano for four colonies in the Ross Sea
-# Cleaned version
 # Creator: Alexandra Strang
-# Last edited: 01/09/2024
 
 sessionInfo() # for citing package versions
 citation() # for citing packages
