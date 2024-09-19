@@ -12,7 +12,7 @@
   3) What percent change in breeding pairs between years will result in a sufficiently large change in guano area that we can be confident that colony change has        actually occurred? In other words, how sensitive is observing guano area for detecting population change?
 
 ## Contains:
-This repository contains the R code and data required for completing the analysis in (INSERT PAPER CITATION). 
+This repository contains the R code and data required for completing the analysis in Strang et al. in prep. 
 
 ## Contact:
 alexandra.strang@pg.canterbury.ac.nz with any questions.
