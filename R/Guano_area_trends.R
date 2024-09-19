@@ -38,7 +38,7 @@ Four_trends_plot <- ggplot(Guanoarea, aes(x = Season, y = Guano_area, col = Colo
   scale_colour_manual(values=colours) +
   scale_x_continuous(breaks=seq(2009,2021,by=2))
 
-Four_trends_plot # Plot not used in thesis
+Four_trends_plot # Plot not presented in manuscript
 
 # Try all together on same graph
 
@@ -58,7 +58,7 @@ All_trends_plot <- ggplot(Guanoarea, aes(x = Season, y = logGuano_area, group=Co
   scale_color_manual(values = colours) +
   scale_x_continuous(breaks=seq(2009,2021,by=2))
 
-All_trends_plot # Plot not used in thesis
+All_trends_plot # Plot not presented in manuscript
 
 #####################################################################################################################
 # Plot individually and then combine
@@ -155,4 +155,4 @@ Together <- plot(ggarrange(Crozier_trend_plot,
           ncol = 2, nrow = 2, labels=c("a","b","c","d")))
 annotate_figure(Together, left = "Guano area (m2)", bottom = "Season")
 
-# Chapter 3/ Results/ Trends in guano area over time
+# Figure 3

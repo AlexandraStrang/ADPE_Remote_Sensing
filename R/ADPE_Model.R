@@ -46,6 +46,12 @@ New.model <- lm(Dataset.5.2$logGuano_area ~ Dataset.5.2$logBP)
 
 summary(New.model)
 
+AIC(New.model)
+
+library(MuMIn) # for AICc scores
+
+BP.AICc <- AICc(New.model)
+
 #####################################################################################################################
 # View relationship between BP and GA
 #####################################################################################################################
@@ -75,7 +81,7 @@ Trend_plot <- ggplot(Dataset.5.2, aes(x = logBP, y = logGuano_area, colour = Sit
 
 Trend_plot 
 
-# Chapter 3/ Results/ Model
+# Figure 4
 
 #####################################################################################################################
 # Plot by site
@@ -201,7 +207,7 @@ Correlations <- plot(ggarrange(Crozier_plot,
                                ncol = 2, nrow = 2, labels=c("a","b","c","d")))
 annotate_figure(Correlations, left = "Log Guano area (m2)", bottom = "Log BP")
 
-# Appendix / Appendix Figure 2
+# Plot not presented in manuscript
 
 #####################################################################################################################
 # Look at residuals for model with GA as dependent variable
@@ -233,7 +239,7 @@ New.model.resids <- ggplot(ds4, aes(x=fitted, y=resid, colour = Colony, fill = C
   scale_y_continuous(limits = c(-0.4,0.6), breaks = seq(-0.4,0.6, by=0.2))
 
 
-New.model.resids # Plot not used in thesis
+New.model.resids # Plot not presented in manuscript
 
 #####################################################################################################################
 # Investigate spatial autocorrelation
@@ -315,18 +321,13 @@ summary(lmm2)
 AIC(New.model, lmm2)
 # model without site effect better
 
-library(MuMIn) # for AICc scores
-
 AICc(New.model, lmm2)
-
-# qpcr package
-library(qpcR)
 
 BP.AICc <- AICc(New.model) # parsimonious model 
 lmm2.AICc <- AICc(lmm2) # model with site effect
 
-x <- c(BP.AICc, lmm2.AICc)
-akaike.weights(x)
+# Delta AICc and Akaike weights calculated on line 492
+# due to package mask between qpcr and MuMin
 
 # View residuals of LMM with site effect
 ds4$fitted2 <- fitted(lmm1)
@@ -349,7 +350,7 @@ lmm1.resids <- ggplot(ds4, aes(x=fitted2, y=resid2, colour = Colony, fill = Colo
   scale_y_continuous(limits = c(-0.4,0.6), breaks = seq(-0.4,0.6, by=0.2))
 
 
-lmm1.resids # Plot not used in thesis
+lmm1.resids # Plot not presented in manuscript
 
 # Plot together
 plot(ggarrange(New.model.resids, 
@@ -358,7 +359,7 @@ plot(ggarrange(New.model.resids,
                legend = "right",
                ncol = 1, nrow = 2, labels=c("a","b")))
 
-# Plot not used in thesis
+# Plot not presented in manuscript
 
 # look very similar
 # a is LM without site effect
@@ -374,7 +375,7 @@ temporal.residuals <- resid(New.model, type="pearson") # use type = pearson for 
 par(mfrow = c(1,1))
 acf(temporal.residuals) # no temporal autocorrelation
 
-# Appendix / Appendix Figure 1
+# Plot not presented in manuscript
 
 #####################################################################################################################
 # Investigate factors that may influence relationship
@@ -406,7 +407,7 @@ cor.matrix <- cor(covariates) # default method is pearsons
 
 corrplot(cor.matrix, method = "number", type = "lower", tl.cex = 1)
 
-# Appendix/ Appendix Table 1
+# Plot not presented in manuscript
 
 # Can't use northness due to correlation with BP - Removed from further analysis
 # northness and BP correlated positively (0.96)
@@ -469,15 +470,47 @@ AICc(New.model, lm.GA.e) # model without PAR and slope better
 # Intercept only model
 null.model <- lm(Dataset.5.4$logGuano_area ~ 1)
 
-BP.AICc <- AICc(New.model)
+BP.AICc <- AICc(New.model) # BP only model
 Slope.AICc <- AICc(lm.GA.b) # slope model
 PAR.AICc <- AICc(lm.GA.d) # PAR model
 Slope.PAR.AICc <- AICc(lm.GA.e) # slope and PAR model
-null.AICc <- AICc(null.model)
+null.AICc <- AICc(null.model) # intercept only model
+
+BP.AICc-null.AICc
+BP.AICc-Slope.AICc
+BP.AICc-PAR.AICc
+BP.AICc-Slope.PAR.AICc
+
 
 # calculate delta AICc scores and weights
+library(qpcR) # package masks MuMin so run after 
+
+# for candidate models
 x <- c(BP.AICc, Slope.AICc, PAR.AICc, Slope.PAR.AICc, null.AICc)
 akaike.weights(x)
+
+# for site effect
+x <- c(BP.AICc, lmm2.AICc)
+akaike.weights(x)
+
+# Likelihood ratio test (results not reported in the manuscript)
+library(lmtest)
+
+# start with the full model first
+
+# compare above model 1 to 2, 3, and 4
+lrtest(lm.GA.e, lm.GA.b) # 0.50
+lrtest(lm.GA.e, lm.GA.d) # 0.12
+lrtest(lm.GA.e, New.model) # 0.24
+# full model with slope and PAR is not an improvement
+
+# compare above model 2 to 4
+lrtest(lm.GA.b, New.model) # 0.12
+# full model with slope is not an improvement
+
+# compare above model 3 to 4
+lrtest(lm.GA.d, New.model) # 0.49
+# full model with PAR is not an improvement
 
 #####################################################################################################################
 # 2. How well can we estimate Guano area and BP relationship at a new site (cross-validation)
@@ -541,10 +574,7 @@ sig = summary(New.model)$sigma
 
 par(mfrow=c(2,2))
 
-#added in below
-
 ADPE_Data <- Dataset.5.2
-# sites = ADPE_Data$Site_ID
 sites <- c("BIRD", "CROZ", "INEX", "ROYD")
 
 # loop
@@ -592,7 +622,7 @@ abline(h = 0.95, col = "blue", lty = 2) # add a blue dashed line at y = 0.95
 abline(h = 0.80, col = "black", lty = 2) # add a black dashed line at y = 0.80
 abline(h = 0.60, col = "red", lty = 2) # add a black dashed line at y = 0.60
 
-# Chapter 3/ Results/ Model
+# Figure 5
 
 # Results 
 # "BIRD  95% confident this proportion change is real:  0.45"
@@ -667,10 +697,7 @@ sig = summary(lm.GA.b)$sigma
 
 par(mfrow=c(2,2))
 
-#added in below
-
 ADPE_Data <- Dataset.5.2
-# sites = ADPE_Data$Site_ID
 sites <- c("BIRD", "CROZ", "INEX", "ROYD")
 
 # loop
@@ -718,7 +745,7 @@ abline(h = 0.95, col = "blue", lty = 2) # add a blue dashed line at y = 0.95
 abline(h = 0.80, col = "black", lty = 2) # add a black dashed line at y = 0.80
 abline(h = 0.60, col = "red", lty = 2) # add a black dashed line at y = 0.60
 
-# Chapter 3/ Results/ Model
+# Plot not presented in manuscript
 
 # Results 
 # "BIRD  95% confident this proportion change is real:  0.44"
