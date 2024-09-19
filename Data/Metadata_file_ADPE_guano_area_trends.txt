@@ -1,13 +1,13 @@
 Metadata file for ADPE_guano_area_trends.csv
 Creator: Alexandra Strang
 Date: Created on the 15/08/2023
-Purpose: Using the area of guano as a population index from satellite imagery to monitor four Adélie penguin colonies in the Ross Sea, Antarctica, between the austral summers of 2009-2021. 
+Purpose: Using the area of guano as a population index from satellite imagery to monitor four AdÃ©lie penguin colonies in the Ross Sea, Antarctica, between the austral summers of 2009-2021. 
 
 Column names and description:
 The column name is found in row one of each column.
-Colony: The given name of the Adélie penguin colony.
-Colony_code: The four digit colony code
-Season: The Adélie penguin breeding season that the satellite imagery is from; we use the initial year of the beginning of the austral summer.
+Colony: The given name of the AdÃ©lie penguin colony.
+Colony_code: The four digit colony code.
+Season: The AdÃ©lie penguin breeding season that the satellite imagery is from; we use the initial year of the beginning of the austral summer.
 Date: The date of when the satellite image was taken in yyyymmdd format.
 Day: The day the satellite image was taken on.
 Month: The month the satellite image was in taken in.
