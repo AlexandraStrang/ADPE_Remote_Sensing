@@ -1,0 +1,19 @@
+Metadata file for ADPE_masterdata.csv
+Creator: Alexandra Strang
+Date: Created on the 12/10/2023
+Purpose: Using the area of guano as a population index from satellite imagery to monitor four Adélie penguin colonies in the Ross Sea, Antarctica, between the austral summers of 2009-2021. 
+
+Column names and description:
+The column name is found in row one of each column.
+Colony: The given name of the Adélie penguin colony.
+Site_ID: The four digit colony code.
+Year: The Adélie penguin breeding season that the satellite imagery is from; we use the initial year of the beginning of the austral summer.
+Image_date: The date of when the satellite image was taken in yyyymmdd format.
+Guano_area: The area of gunao in metres squared.
+BP: The number of breeding pairs of Adélie penguins obtained via aerial survey (Lyver et al. 2014; https://doi.org/10.1371/journal.pone.0091188)
+PAR: The average perimeter-area-ratio (PAR) of the guano area at each colony.
+SD_PAR: The standard deviation of the average perimeter-area-ratio (PAR) of the guano area at each colony.
+Slope: The average slope (degrees) of the guano area terrain at each colony.
+SD_Slope: The standard deviation of the average slope (degrees) of the terrain at each colony.
+Aspect: The average aspect (degrees) of the guano area terrain at each colony.
+SD_Aspect: The standard deviation of the average aspect (degrees) of the guano area terrain at each colony. 
