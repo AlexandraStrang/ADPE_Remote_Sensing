@@ -2,7 +2,7 @@
 
 
 ## Overview:
-[add overview]
+We investigated the utility of Very High-Resolution (VHR) imagery for indirect population assessments of Adélie penguins from four Ross Sea colonies: capes Crozier, Bird and Royds, and Inexpressible Island, over the austral summers of 2009-2021. We extracted the area of guano from VHR imagery and relate it to the number of breeding pairs of Adélie penguin and colony spatial paramters. 
  Three main questions were addressed: 
 
   1) What factors influence the area of guano extracted from VHR imagery in any given year, and therefore the ability to predict the number of breeding pairs using       guano area?
