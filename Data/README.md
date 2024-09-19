@@ -1,5 +1,5 @@
 ## Contains:
-The data for completing analysis ...
+The data for completing analysis in Strang et al. in prep.
 
 Includes:
 - `ADPE_gauno_area_trends.csv`: This file contains the data required for assessing the trends in guano area over 2009-2021, using the R script `Guano_area_trends.R`. 
