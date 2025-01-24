@@ -1,7 +1,6 @@
 
-# Plots exploring the trends in guano area of four Adélie penguin colonies extracted from VHR imagery over 2009-2021
+# Plots exploring the trends in guano area of four Adélie penguin colonies in the Ross Sea extracted from VHR imagery over 2009-2021
 # Creator: Alexandra Strang
-# Last edited: 06/02/2024
 
 sessionInfo() # for citing package versions
 citation() # for citing packages

@@ -1,5 +1,5 @@
 
-# Model to predict the number of breeding pairs of Adélie penguins using the area of guano for four colonies in the Ross Sea
+# Model to predict the number of breeding pairs of Adélie penguins using the area of guano for four colonies in the Ross Sea extracted from VHR imagery over 2009-2021
 # Creator: Alexandra Strang
 
 sessionInfo() # for citing package versions
@@ -105,7 +105,7 @@ CROZ_pvalue <- signif(CROZ_cor$p.value, digits = 3)
 Crozier_plot <- ggplot(CROZdf, aes(x = logBP, y = logGuano_area)) + 
   geom_point(size=3, colour = "#Ff0000") + 
   geom_smooth(method="lm", col = "black") +
-  annotate("text", x = 12.69, y = 13.4, 
+  annotate("text", x = 12.65, y = 13.4, 
            label = paste0("Pearsons = ", CROZ_pearsons, "  P value = ", CROZ_pvalue)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
@@ -560,7 +560,7 @@ r2Total <- 1 - (sum(Dif.array[,1]^2) / sum(Dif.array[,2]^2))
 
 # R squared predicted value
 print(r2Total)
-# 0.9772684
+# 0.9791012
 
 #####################################################################################################################
 # 3. What is the probability of detecting a true change in BP using guano area?
@@ -625,10 +625,10 @@ abline(h = 0.60, col = "red", lty = 2) # add a black dashed line at y = 0.60
 # Figure 5
 
 # Results 
-# "BIRD  95% confident this proportion change is real:  0.45"
-# "CROZ  95% confident this proportion change is real:  0.45"
-# "INEX  95% confident this proportion change is real:  0.45"
-# "ROYD  95% confident this proportion change is real:  0.45"
+# "BIRD  95% confident this proportion change is real:  0.44"
+# "CROZ  95% confident this proportion change is real:  0.44"
+# "INEX  95% confident this proportion change is real:  0.44"
+# "ROYD  95% confident this proportion change is real:  0.44"
 
 # What about trying 80% confident
 for(i in 1:4)
@@ -655,10 +655,10 @@ for(i in 1:4)
 }
 
 # Results
-# "BIRD  80% confident this proportion change is real:  0.27"
-# "CROZ  80% confident this proportion change is real:  0.27"
-# "INEX  80% confident this proportion change is real:  0.27"
-# "ROYD  80% confident this proportion change is real:  0.27"
+# "BIRD  80% confident this proportion change is real:  0.26"
+# "CROZ  80% confident this proportion change is real:  0.26"
+# "INEX  80% confident this proportion change is real:  0.26"
+# "ROYD  80% confident this proportion change is real:  0.26"
 
 # What about trying 60% confident
 for(i in 1:4)
@@ -748,10 +748,10 @@ abline(h = 0.60, col = "red", lty = 2) # add a black dashed line at y = 0.60
 # Plot not presented in manuscript
 
 # Results 
-# "BIRD  95% confident this proportion change is real:  0.44"
-# "CROZ  95% confident this proportion change is real:  0.44"
-# "INEX  95% confident this proportion change is real:  0.44"
-# "ROYD  95% confident this proportion change is real:  0.44"
+# "BIRD  95% confident this proportion change is real:  0.43"
+# "CROZ  95% confident this proportion change is real:  0.43"
+# "INEX  95% confident this proportion change is real:  0.43"
+# "ROYD  95% confident this proportion change is real:  0.43"
 
 # What about trying 80% confident
 for(i in 1:4)
@@ -778,10 +778,10 @@ for(i in 1:4)
 }
 
 # Results
-# "BIRD  80% confident this proportion change is real:  0.26"
-# "CROZ  80% confident this proportion change is real:  0.26"
-# "INEX  80% confident this proportion change is real:  0.26"
-# "ROYD  80% confident this proportion change is real:  0.26"
+# "BIRD  80% confident this proportion change is real:  0.25"
+# "CROZ  80% confident this proportion change is real:  0.25"
+# "INEX  80% confident this proportion change is real:  0.25"
+# "ROYD  80% confident this proportion change is real:  0.25"
 
 # What about trying 60% confident
 for(i in 1:4)
