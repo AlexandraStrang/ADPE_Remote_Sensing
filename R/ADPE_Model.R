@@ -1,5 +1,5 @@
 
-# Model to predict the number of breeding pairs of Adélie penguins using the area of guano for four colonies in the Ross Sea extracted from VHR imagery over 2009-2021
+# Model to relate the number of breeding pairs of Adélie penguins to the area of guano for four colonies in the Ross Sea extracted from VHR imagery over 2009-2021
 # Creator: Alexandra Strang
 
 sessionInfo() # for citing package versions
@@ -81,7 +81,7 @@ Trend_plot <- ggplot(Dataset.5.2, aes(x = logBP, y = logGuano_area, colour = Sit
 
 Trend_plot 
 
-# Figure 4
+# Figure 2
 
 #####################################################################################################################
 # Plot by site
@@ -622,7 +622,7 @@ abline(h = 0.95, col = "blue", lty = 2) # add a blue dashed line at y = 0.95
 abline(h = 0.80, col = "black", lty = 2) # add a black dashed line at y = 0.80
 abline(h = 0.60, col = "red", lty = 2) # add a black dashed line at y = 0.60
 
-# Figure 5
+# Figure 3
 
 # Results 
 # "BIRD  95% confident this proportion change is real:  0.44"
