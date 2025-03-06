@@ -1,4 +1,4 @@
-# Verifying efficacy in very high-resolution remote sensing of Ross Sea Adélie penguin (*Pygoscelis adeliae*) populations
+# Using Remote Sensing to Estimate Adélie Penguin Populations: Effective for Long-Term Trends but Not Annual Variability
 
 
 ## Overview:
