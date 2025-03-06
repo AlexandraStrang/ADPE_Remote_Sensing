@@ -39,7 +39,7 @@ Four_trends_plot <- ggplot(Guanoarea, aes(x = Season, y = Guano_area, col = Colo
 
 Four_trends_plot # Plot not presented in manuscript
 
-# Try all together on same graph
+# Try all together on the same graph
 
 Guanoarea$logGuano_area <- log(Guanoarea$Guano_area)
 
@@ -154,4 +154,4 @@ Together <- plot(ggarrange(Crozier_trend_plot,
           ncol = 2, nrow = 2, labels=c("a","b","c","d")))
 annotate_figure(Together, left = "Guano area (m2)", bottom = "Season")
 
-# Figure 3
+# Figure S2
