@@ -6,12 +6,13 @@ sessionInfo() # for citing package versions
 citation() # for citing packages
 
 # packages
-library(MuMIn) # for AICc scores
 library(ggplot2)
 library(ggpubr)
 library(DHARMa) # for spatial autocorrelation test
 library(dplyr) # for categorical aspect
 library(corrplot) # for collinearity analysis
+library(lme4) # for LMMs
+library(MuMIn) # for AICc scores
 library(car) # for VIF values
 library(lmtest) # for likelihood ratio test
 
@@ -356,8 +357,6 @@ corrplot(cor.matrix, method = "number", type = "lower", tl.cex = 1)
 #####################################################################################################################
 # Account for repeated measures within a site with linear mixed-effect model (LMM) that includes site as a random effect
 #####################################################################################################################
-
-library(lme4)
 
 # Test if site effect is supported in full model (most complex) with par and slope
 Full_model <- lme4::lmer(logGuano_area ~ logBP + PAR + Slope + (1|Site_ID), data = Dataset.5.4)
