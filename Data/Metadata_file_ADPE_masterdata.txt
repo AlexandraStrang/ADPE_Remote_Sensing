@@ -9,7 +9,7 @@ Colony: The given name of the Adélie penguin colony.
 Site_ID: The four digit colony code.
 Year: The Adélie penguin breeding season that the satellite imagery is from; we use the initial year of the beginning of the austral summer.
 Image_date: The date of when the satellite image was taken in yyyymmdd format.
-Guano_area: The area of gunao in metres squared.
+Guano_area: The area of guano in metres squared.
 BP: The number of breeding pairs of Adélie penguins obtained via aerial survey (https://datastore.landcareresearch.co.nz/dataset/adelie-penguin-census-data#:~:text=The%20aim%20is%20to%20census%20Ad%C3%A9lie%20%28Pygoscelis%20adeliae%29,the%20Antarctic%20Ocean%20ecosystem%2C%20both%20natural%20and%20man-induced.)
 PAR: The average perimeter-area-ratio (PAR) of the guano area at each colony.
 SD_PAR: The standard deviation of the average perimeter-area-ratio (PAR) of the guano area at each colony.
