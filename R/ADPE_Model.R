@@ -5,6 +5,16 @@
 sessionInfo() # for citing package versions
 citation() # for citing packages
 
+# packages
+library(MuMIn) # for AICc scores
+library(ggplot2)
+library(ggpubr)
+library(DHARMa) # for spatial autocorrelation test
+library(dplyr) # for categorical aspect
+library(corrplot) # for collinearity analysis
+library(car) # for VIF values
+library(lmtest) # for likelihood ratio test
+
 #####################################################################################################################
 # Read in data
 #####################################################################################################################
@@ -48,15 +58,11 @@ summary(New.model)
 
 AIC(New.model)
 
-library(MuMIn) # for AICc scores
-
 AICc(New.model)
 
 #####################################################################################################################
 # View relationship between BP and GA
 #####################################################################################################################
-
-library(ggplot2)
 
 # Extract R squared
 r2 <- round(summary(New.model)$r.squared, 2)
@@ -197,9 +203,6 @@ Inexpressible_plot <- ggplot(INEXdf, aes(x = logBP, y = logGuano_area)) +
 Inexpressible_plot
 
 # Plot together
-
-library(ggpubr)
-
 Correlations <- plot(ggarrange(Crozier_plot, 
                                Bird_plot, 
                                Royds_plot,
@@ -247,11 +250,8 @@ New.model.resids # Plot not presented in manuscript
 
 # Test for spatial autocorrelation using Moran's I test
 
-library(DHARMa)
-
 # add spatial coordinates to data set
 # longitude is x and latitude is y
-
 # Cape Crozier -77.4592, 169.2571
 # Cape Bird -77.2293, 166.4128
 # Cape Royds -77.5545, 166.1639
@@ -316,8 +316,6 @@ acf(temporal.residuals) # no temporal autocorrelation
 
 # Treat aspect as a categorical variable with 8 cardinal directions
 
-library(dplyr)
-
 # Categorizing aspect values into 8 directions
 Dataset.5.0 <- Dataset.5.0 %>%
   mutate(Aspect_factor = case_when(
@@ -343,8 +341,6 @@ Dataset.5.4 <- na.omit(Dataset.5.3)
 View(Dataset.5.4)
 
 # Investigate correlation between covariates using correlogram
-
-library(corrplot)
 
 covariates <- data.frame(Dataset.5.4$logBP, Dataset.5.4$Slope, Dataset.5.4$PAR)
 
@@ -376,13 +372,13 @@ anova(Full_model_ML) # just looks at fixed effects
 summary(Full_model_ML)
 # singular fit with very small random effect
 
-# compare to LM with AIC and AICc under full model
+# Akaike weight site effect in full model
+y <- c(Slope.PAR.AICc, Full.AICc)
+Weights(y)
 
 #####################################################################################################################
 # Run candidate models
 #####################################################################################################################
-
-library(car) # for VIF values
 
 # Removed from further analysis - Candidate model with aspect (collinearity)
 lm.GA.a1 <- lm(Dataset.5.4$logGuano_area ~ Dataset.5.4$logBP + Dataset.5.4$Aspect_factor)
@@ -453,21 +449,32 @@ BP.AICc-Slope.AICc
 BP.AICc-PAR.AICc
 BP.AICc-Slope.PAR.AICc
 
+# calculate delta AICc, weights, and relative likelihoods
 
-# calculate delta AICc scores and weights
-library(qpcR) # package masks MuMin so run after 
-
-# for candidate models
+# for candidate models and null
 x <- c(BP.AICc, Slope.AICc, PAR.AICc, Slope.PAR.AICc, null.AICc)
-akaike.weights(x)
+Weights(x)
 
-# for site effect in full model
-x <- c(Slope.PAR.AICc, Full.AICc)
-akaike.weights(x)
+# compute delta AICc
+delta <- x - min(x)
+
+# compute relative likelihoods
+rel.lik <- exp(-0.5 * delta)
+rel.lik
+
+model_names <- c("BP", "Slope", "PAR", "Slope+PAR", "Null")
+
+summary_table <- data.frame(
+  Model = model_names,
+  AICc = x,
+  Delta_AICc = delta,
+  Akaike_Weight = Weights(x),
+  Relative_Likelihood = rel.lik
+)
+summary_table[, 2:5] <- round(summary_table[, 2:5], 2)
+print(summary_table)
 
 # Likelihood ratio test (results not reported in the manuscript)
-library(lmtest)
-
 # start with the full model first
 
 # compare above model 1 to 2, 3, and 4
