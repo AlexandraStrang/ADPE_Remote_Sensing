@@ -77,6 +77,8 @@ Crozier_trend_plot <- ggplot(CROZdf, aes(x = Season, y = Guano_area)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -95,6 +97,8 @@ Bird_trend_plot <- ggplot(BIRDdf, aes(x = Season, y = Guano_area)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -113,6 +117,8 @@ Royds_trend_plot <- ggplot(ROYDdf, aes(x = Season, y = Guano_area)) +
  xlab(element_blank()) +
  ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -130,6 +136,8 @@ Inexpressible_trend_plot <- ggplot(INEXdf, aes(x = Season, y = Guano_area)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -152,6 +160,9 @@ Together <- plot(ggarrange(Crozier_trend_plot,
           Royds_trend_plot,
           Inexpressible_trend_plot,
           ncol = 2, nrow = 2, labels=c("a","b","c","d")))
-annotate_figure(Together, left = "Guano area (m2)", bottom = "Season")
+annotate_figure(Together, left = "Guano area (m²)", bottom = "Season")
 
 # Figure S2
+ggsave("Figure_S2.png", Together, 
+       width = 8, height = 5, units = "in", 
+       dpi = 600)
