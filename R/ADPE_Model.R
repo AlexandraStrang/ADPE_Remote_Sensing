@@ -6,13 +6,13 @@ sessionInfo() # for citing package versions
 citation() # for citing packages
 
 # packages
-library(MuMIn) # for AICc scores
 library(ggplot2)
 library(ggpubr)
 library(DHARMa) # for spatial autocorrelation test
 library(dplyr) # for categorical aspect
 library(corrplot) # for collinearity analysis
-library(lme4) # for lmm
+library(lme4) # for LMM
+library(MuMIn) # for AICc scores
 library(car) # for VIF values
 library(lmtest) # for likelihood ratio test
 
