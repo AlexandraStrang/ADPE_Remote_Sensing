@@ -12,6 +12,7 @@ library(ggpubr)
 library(DHARMa) # for spatial autocorrelation test
 library(dplyr) # for categorical aspect
 library(corrplot) # for collinearity analysis
+library(lme4) # for lmm
 library(car) # for VIF values
 library(lmtest) # for likelihood ratio test
 
@@ -26,7 +27,7 @@ head(masterdata)
 Dataset.5.0 <- masterdata
 
 # Add colour to sites 
-colours<-c(BIRD="blue",CROZ="red",INEX="orange",ROYD="green")
+colours<-c("Cape Bird"="blue","Cape Crozier"="red","Inexpressible Island"="orange","Cape Royds"="green")
 
 #####################################################################################################################
 # Log transform guano area (GA) and breeding pairs (BP)
@@ -68,14 +69,16 @@ AICc(New.model)
 r2 <- round(summary(New.model)$r.squared, 2)
 
 # Plot relationship between BP and GA
-Trend_plot <- ggplot(Dataset.5.2, aes(x = logBP, y = logGuano_area, colour = Site_ID)) + 
+Trend_plot <- ggplot(Dataset.5.2, aes(x = logBP, y = logGuano_area, colour = Colony)) + 
   geom_point(size=3) + 
   geom_smooth(method="lm", col = "black") +
   annotate("text", x = 8, y = 13, 
            label = paste0("R² = ", r2)) +
   xlab("Log BP") +
-  ylab("Log Guano area (m2)") +
+  ylab("Log guano area (m²)") +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+    axis.ticks.length = unit(0.2, "cm")) +                    # length of ticks
   theme(legend.position = "right") +
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -88,6 +91,9 @@ Trend_plot <- ggplot(Dataset.5.2, aes(x = logBP, y = logGuano_area, colour = Sit
 Trend_plot 
 
 # Figure 2
+ggsave("Figure_2.png", Trend_plot, 
+       width = 8, height = 5, units = "in", # size in inches
+       dpi = 600) # resolution
 
 #####################################################################################################################
 # Plot by site
@@ -116,6 +122,8 @@ Crozier_plot <- ggplot(CROZdf, aes(x = logBP, y = logGuano_area)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -142,6 +150,8 @@ Bird_plot <- ggplot(BIRDdf, aes(x = logBP, y = logGuano_area)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -168,6 +178,8 @@ Royds_plot <- ggplot(ROYDdf, aes(x = logBP, y = logGuano_area)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -193,6 +205,8 @@ Inexpressible_plot <- ggplot(INEXdf, aes(x = logBP, y = logGuano_area)) +
   xlab(element_blank()) +
   ylab(element_blank()) +
   theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +
   theme(legend.position = c(1,1)) + 
   theme(axis.line = element_line(color='black'),
         plot.background = element_blank(),
@@ -216,31 +230,29 @@ annotate_figure(Correlations, left = "Log Guano area (m2)", bottom = "Log BP")
 # Look at residuals for model with GA as dependent variable
 #####################################################################################################################
 
-# Extracting only needed variables
-ds3 <- Dataset.5.2[,c("logBP", "logGuano_area", "Site_ID")]
+Dataset.5.2$fitted <- New.model$fitted.values
+Dataset.5.2$resid <- New.model$residuals
 
-# Remove NAs
-ds4 <- na.omit(ds3)
-
-ds4$fitted <- New.model$fitted.values
-ds4$resid <- New.model$residuals
-
-ds4$Colony <- as.factor(ds4$Site_ID)
-
-# Plot
-New.model.resids <- ggplot(ds4, aes(x=fitted, y=resid, colour = Colony, fill = Colony, shape = Colony)) +
-  geom_point(size=3 )+
-  geom_hline(yintercept=0) +
+New.model.resids <- ggplot(Dataset.5.2, aes(x = fitted, y = resid, colour = Colony, fill = Colony, shape = Colony)) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 0) +
   xlab("Observed") +
   ylab("Residuals") +
-  scale_shape_manual(values = c(21,21,21,21))+
+  scale_shape_manual(values = c(21, 21, 21, 21)) +
   scale_fill_manual(values = colours) +
   scale_colour_manual(values = colours) +
-  theme_classic()+
-  theme(axis.text.x = element_text(color="black", size=12),
-        axis.text.y = element_text(color="black", size=12),)+
-  scale_y_continuous(limits = c(-0.4,0.6), breaks = seq(-0.4,0.6, by=0.2))
-
+  theme_minimal() +
+  theme(axis.ticks = element_line(color = "black", linewidth = 0.5),   # add ticks
+        axis.ticks.length = unit(0.2, "cm")) +                    # length of ticks
+  theme(legend.position = "right") +
+  theme(axis.line = element_line(color='black'),
+        plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank()) +
+  theme(axis.text.x = element_text(color = "black", size = 12),
+    axis.text.y = element_text(color = "black", size = 12)) +
+  scale_y_continuous(limits = c(-0.4, 0.6), breaks = seq(-0.4, 0.6, by = 0.2))
 
 New.model.resids # Plot not presented in manuscript
 
@@ -357,8 +369,6 @@ corrplot(cor.matrix, method = "number", type = "lower", tl.cex = 1)
 # Account for repeated measures within a site with linear mixed-effect model (LMM) that includes site as a random effect
 #####################################################################################################################
 
-library(lme4)
-
 # Test if site effect is supported in full model (most complex) with par and slope
 Full_model <- lme4::lmer(logGuano_area ~ logBP + PAR + Slope + (1|Site_ID), data = Dataset.5.4)
 
@@ -374,9 +384,7 @@ anova(Full_model_ML) # just looks at fixed effects
 summary(Full_model_ML)
 # singular fit with very small random effect
 
-# Akaike weight site effect in full model
-y <- c(Slope.PAR.AICc, Full.AICc)
-Weights(y)
+# compare to full LM below
 
 #####################################################################################################################
 # Run candidate models
@@ -446,12 +454,17 @@ Slope.PAR.AICc <- AICc(lm.GA.e) # slope and PAR model
 null.AICc <- AICc(null.model) # intercept only model
 Full.AICc <- AICc(Full_model_ML) # full model
 
+Full.AICc-Slope.PAR.AICc
 BP.AICc-null.AICc
 BP.AICc-Slope.AICc
 BP.AICc-PAR.AICc
 BP.AICc-Slope.PAR.AICc
 
 # calculate delta AICc, weights, and relative likelihoods
+
+# Akaike weight site effect in full model
+y <- c(Slope.PAR.AICc, Full.AICc)
+Weights(y)
 
 # for candidate models and null
 x <- c(BP.AICc, Slope.AICc, PAR.AICc, Slope.PAR.AICc, null.AICc)
@@ -542,6 +555,7 @@ r2Total <- 1 - (sum(Dif.array[,1]^2) / sum(Dif.array[,2]^2))
 # R squared predicted value
 print(r2Total)
 # 0.9791012
+# 0.98
 
 #####################################################################################################################
 # 3. What is the probability of detecting a true change in BP using guano area?
@@ -559,7 +573,6 @@ ADPE_Data <- Dataset.5.2
 sites <- c("BIRD", "CROZ", "INEX", "ROYD")
 
 # loop
-
 propReduce = seq(0.05, 0.6, 0.01)
 for(i in 1:4)
 {
@@ -594,16 +607,37 @@ for(i in 1:4)
 
 # Plot relationship on it's own
 
-par(mfrow=c(1,1))
+df <- data.frame(propReduce, pTrueReduce)
 
-plot(propReduce, pTrueReduce, type="l", xlab="Proportion of population reduced", 
-     ylab= "Probability of detecting a true reduction")
+Figure3_plot <- ggplot(df, aes(x = propReduce, y = pTrueReduce)) +
+  geom_line(color = "black") +
+  geom_hline(yintercept = 0.95, col = "blue", linetype = "dashed") +
+  geom_hline(yintercept = 0.80, col = "black", linetype = "dashed") +
+  geom_hline(yintercept = 0.60, col = "red", linetype = "dashed") +
+  labs(x = "Proportion of population reduced",
+       y = "Probability of detecting a true reduction") +
+  theme_minimal() +
+  theme(
+    axis.ticks = element_line(color = "black", linewidth = 0.5),
+    axis.ticks.length = unit(0.2, "cm"),
+    axis.line = element_line(color = "black"),
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()) +
+  scale_x_continuous(
+    breaks = seq(0.1, 0.6, by = 0.1),
+    labels = sprintf("%.2f", seq(0.1, 0.6, by = 0.1))) +
+  scale_y_continuous(
+    breaks = seq(0.6, 1.0, by = 0.1),
+    labels = sprintf("%.2f", seq(0.6, 1.0, by = 0.1)))
 
-abline(h = 0.95, col = "blue", lty = 2) # add a blue dashed line at y = 0.95
-abline(h = 0.80, col = "black", lty = 2) # add a black dashed line at y = 0.80
-abline(h = 0.60, col = "red", lty = 2) # add a black dashed line at y = 0.60
+Figure3_plot
 
 # Figure 3
+ggsave("Figure_3.png", Figure3_plot, 
+       width = 8, height = 5, units = "in", 
+       dpi = 600)
 
 # Results 
 # "BIRD  95% confident this proportion change is real:  0.44"
@@ -787,7 +821,6 @@ for(i in 1:4)
   plot(propReduce, pTrueReduce, type="l", xlab="Prop. pop. reduced", 
        ylab= "Prob. true reduction", main= site_i)
 }
-
 
 # Results
 # "BIRD  60% confident this proportion change is real:  0.09"
