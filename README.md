@@ -1,4 +1,4 @@
-# Using Remote Sensing to Estimate Adélie Penguin Populations: Effective for Long-Term Trends but Not Annual Variability
+# Ground-truthing of satellite imagery to assess seabird colony size: A test using Adélie penguins
 
 
 ## Overview:
