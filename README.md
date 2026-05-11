@@ -12,7 +12,7 @@ We investigated the utility of Very High-Resolution (VHR) imagery for indirect p
   3) What percent change in breeding pairs between years will result in a sufficiently large change in guano area to confidently detect change in colony size remotely? In other words, how sensitive are changes in guano area in reflecting true population change? 
 
 ## Contains:
-This repository contains the R code and data required for completing the analysis in Strang et al. (2026): https://doi.org/10.1002/rse2.70040
+This repository contains the R code and data required for completing the analysis in Strang et al. (2025): https://doi.org/10.1002/rse2.70040
 
 ## Contact:
 alexandra.strang@pg.canterbury.ac.nz with any questions.
