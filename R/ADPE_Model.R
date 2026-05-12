@@ -2,6 +2,8 @@
 # Model to translate the number of breeding pairs of Adélie penguins to the area of guano of four colonies in the Ross Sea extracted from VHR imagery over 2009-2021
 # Creator: Alexandra Strang
 
+# Hi team!
+
 sessionInfo() # for citing package versions
 citation() # for citing packages
 
